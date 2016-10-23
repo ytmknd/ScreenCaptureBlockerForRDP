@@ -1,0 +1,10 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+/HookDLL/x64/Debug
+/ipch/SCREENCAPTUREBLOCKERFORRDP-29979312
+/Setup/bin/x64/Debug
+/Setup/obj/x64/Debug
+/x64/Debug
+/ScreenCaptureBlockerForRDP.VC.VC.opendb

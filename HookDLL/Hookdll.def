@@ -1,0 +1,2 @@
+SECTIONS
+	hookdll READ WRITE SHARED
