@@ -11,12 +11,12 @@
 #define MAX_LOADSTRING 100
 
 // グローバル定数:
+WCHAR const SZWINDOWCLASS[] = L"SCREENCAPTUREBLOCKERFORRDP"; // メイン ウィンドウ クラス名
 UINT const WMAPP_NOTIFYCALLBACK = WM_APP + 1;
 
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
-WCHAR szWindowClass[MAX_LOADSTRING];            // メイン ウィンドウ クラス名
 
 // このコード モジュールに含まれる関数の宣言を転送します:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -75,12 +75,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_DENYTAKINGSCREENCAPTUREFORRDP));
+	wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_DENYTAKINGSCREENCAPTUREFORRDP));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_DENYTAKINGSCREENCAPTUREFORRDP);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.lpszMenuName   = 0;
+    wcex.lpszClassName  = SZWINDOWCLASS;
+    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_DENYTAKINGSCREENCAPTUREFORRDP));
 
     return RegisterClassExW(&wcex);
 }
@@ -99,7 +99,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // グローバル変数にインスタンス処理を格納します。
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   HWND hWnd = CreateWindowW(SZWINDOWCLASS, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
@@ -121,15 +121,12 @@ BOOL AddNotificationIcon(HWND hwnd)
 {
 	NOTIFYICONDATA nid = { sizeof(nid) };
 	nid.hWnd = hwnd;
-	// add the icon, setting the icon, tooltip, and callback message.
-	// the icon will be identified with the GUID
 	nid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE | NIF_SHOWTIP | NIF_GUID;
 	nid.uCallbackMessage = WMAPP_NOTIFYCALLBACK;
-	nid.hIcon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_SMALL));
+	nid.hIcon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_DENYTAKINGSCREENCAPTUREFORRDP));
 	LoadString(hInst, IDS_TOOLTIP, nid.szTip, ARRAYSIZE(nid.szTip));
 	Shell_NotifyIcon(NIM_ADD, &nid);
 
-	// NOTIFYICON_VERSION_4 is prefered
 	nid.uVersion = NOTIFYICON_VERSION_4;
 	return Shell_NotifyIcon(NIM_SETVERSION, &nid);
 }
@@ -149,7 +146,7 @@ BOOL DeleteNotificationIcon()
 //
 //  関数: ShowContextMenu()
 //
-//  目的: 
+//  目的: インジケーターアイコン上で右クリックした時に表示されるメニューの処理を行います。
 //
 void ShowContextMenu(HWND hwnd, POINT pt)
 {
@@ -159,10 +156,8 @@ void ShowContextMenu(HWND hwnd, POINT pt)
 		HMENU hSubMenu = GetSubMenu(hMenu, 0);
 		if (hSubMenu)
 		{
-			// our window must be foreground before calling TrackPopupMenu or the menu will not disappear when the user clicks away
 			SetForegroundWindow(hwnd);
 
-			// respect menu drop alignment
 			UINT uFlags = TPM_RIGHTBUTTON;
 			if (GetSystemMetrics(SM_MENUDROPALIGNMENT) != 0)
 			{
@@ -194,23 +189,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:
-		// add the notification icon
 		if (!AddNotificationIcon(hWnd))
 		{
-			MessageBox(hWnd,
-				L"Please read the ReadMe.txt file for troubleshooting",
-				L"Error adding icon", MB_OK);
+			MessageBox(hWnd, L"Error adding icon", L"Error", MB_OK);
 			return -1;
 		}
 		break;
 	case WM_COMMAND:
 	{
 		int const wmId = LOWORD(wParam);
-		// Parse the menu selections:
 		switch (wmId)
 		{
 		case IDM_ABOUT:
-			// placeholder for an options dialog
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 
@@ -227,18 +217,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WMAPP_NOTIFYCALLBACK:
 		switch (LOWORD(lParam))
 		{
-		case NIN_SELECT:
-			// NIN_SELECT is prerable to listening to mouse clicks and key presses directly.
-			//MessageBox(hWnd, L"Display the options dialog here.", L"Options", MB_OK); // Do Nothing
-			break;
-
 		case WM_CONTEXTMENU:
 		{
 			POINT const pt = { LOWORD(wParam), HIWORD(wParam) };
 			ShowContextMenu(hWnd, pt);
 		}
 		break;
-}
+		default:
+			;
+		}
 		break;
 
 	case WM_DESTROY:
