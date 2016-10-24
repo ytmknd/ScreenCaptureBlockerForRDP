@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="$(var.ScreenCaptureBlockerForRDP.TargetName)"
+  <Product Id="*" Name="$(var.ScreenCaptureBlockerForRDP.TargetName)"
            Language="1041" Version="0.9.9.1" Manufacturer="YTProducts" UpgradeCode="8D516E1A-7145-4163-B04E-4AFC548FFA50">
 
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x64" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
 
-		<Feature Id="ProductFeature" Title="[ProductName]" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+    <Feature Id="ProductFeature" Title="[ProductName]" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="$(var.ScreenCaptureBlockerForRDP.TargetName)" />
-			</Directory>
-		</Directory>
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ScreenCaptureBlockerForRDP.TargetName)" />
+      </Directory>
+    </Directory>
 
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponentExe" KeyPath="yes" Guid="52E8EFE4-464C-4565-A525-5EEE3036F06D">
-        <File Source="$(var.ScreenCaptureBlockerForRDP.TargetPath)" />
+        <File Source="$(var.ScreenCaptureBlockerForRDP.TargetPath)" ProcessorArchitecture='x64' />
       </Component>
 
       <Component Id="ProductComponentDLL" KeyPath="yes" Guid="C05EB6A3-C57C-46B9-A378-8553E6E2B7C7">
-        <File Source="$(var.HookDLL.TargetPath)" />
+        <File Source="$(var.HookDLL.TargetPath)" ProcessorArchitecture='x64' />
       </Component>
 
       <Component Id="ProductComponentRegistry" KeyPath="yes" Guid="449E0E47-7F76-4BB9-9C85-556C5BCEFD97">
@@ -39,7 +39,7 @@
             Type="string" />
         </RegistryKey>
       </Component>
-      
-		</ComponentGroup>
-	</Fragment>
+
+    </ComponentGroup>
+  </Fragment>
 </Wix>
