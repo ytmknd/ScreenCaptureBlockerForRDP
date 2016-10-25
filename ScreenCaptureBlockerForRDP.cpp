@@ -3,8 +3,6 @@
 
 #include "stdafx.h"
 #include <shellapi.h>
-#include <Dwmapi.h>
-#include <strsafe.h>
 #include "ScreenCaptureBlockerForRDP.h"
 #include "HookDLL/HookDLL.h"
 
