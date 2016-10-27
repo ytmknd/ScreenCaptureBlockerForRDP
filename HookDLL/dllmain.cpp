@@ -1,9 +1,7 @@
 // dllmain.cpp : DLL アプリケーションのエントリ ポイントを定義します。
 #include "stdafx.h"
 
-#include <iostream>
-#include <fstream>
-
+#include <wchar.h>
 #include "HookDLL.h"
 
 using namespace std;
@@ -21,7 +19,7 @@ LRESULT CALLBACK cbtProc(int code, WPARAM wParam, LPARAM lParam) {
 		if (code == HCBT_ACTIVATE) {
 			TCHAR buf[128];
 			if (GetClassName((HWND)wParam, (LPWSTR)buf, 128)) {
-				if (!wcscmp(L"TscShellContainerClass", buf) // RDS Window class
+				if (!wcscmp(L"TscShellContainerClass", buf) // Remote Desktop Window class
 					|| !wcscmp(L"RAIL_WINDOW", buf)) {		// RemoteApp Window class
 					SetWindowDisplayAffinity((HWND)wParam, WDA_MONITOR);
 				}
@@ -63,4 +61,3 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	}
 	return TRUE;
 }
-
