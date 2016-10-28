@@ -11,6 +11,10 @@
 		<Feature Id="ProductFeature" Title="[ProductName]" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
+
+    <InstallExecuteSequence>
+      <ScheduleReboot After='InstallFinalize' />
+    </InstallExecuteSequence>
 	</Product>
 
 	<Fragment>
