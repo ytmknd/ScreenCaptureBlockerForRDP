@@ -12,6 +12,8 @@
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 
+    <UIRef Id="WixUI_Minimal" />
+
     <InstallExecuteSequence>
       <ScheduleReboot After='InstallFinalize' />
     </InstallExecuteSequence>
