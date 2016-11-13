@@ -1,13 +1,12 @@
 # ScreenCaptureBlockerForRDP
 
 ## これは何？
-リモートデスクトップウインドウに表示されている内容を、Print Screen等でキャプチャーできなくするためのプログラム（Windows 7/8/8.1/10用）
+リモートデスクトップウインドウに表示されている内容を、Print Screenキー等でキャプチャーできなくするためのプログラムです（Windows 7/8/8.1/10用）
 
 ## 説明
 インストールすると、PC起動時（ログオン時）にタスクトレイに常駐します。  
-リモートデスクトップやRemoteAppを起動した状態で、Snipping Toolを使用して画面をキャプチャーしてみてください。  
-リモートデスクトップウインドウやRemoteAppウインドウの部分が黒塗りになっていると思います。  
-Print Screenキーによる画面キャプチャーや、 Microsoft Officeの「スクリーンショット」機能を使った場合でも同様です。  
+この状態でスクリーンショットを取ると、リモートデスクトップウインドウやRemoteAppウインドウの部分だけが黒塗りになったスクリーンショットが取れます。
+Print ScreenキーやSnipping Toolを使用した画面キャプチャー、Microsoft Officeの「スクリーンショット」機能を使った場合が対象です。  
 
 ## デモ
 
@@ -22,5 +21,4 @@ Print Screenキーによる画面キャプチャーや、 Microsoft Officeの「
 MIT
 
 ## 謝辞
-アイコンイメージに Ionicons を利用させて貰っています。
-Ionicons is licensed under the MIT license.
+アイコンイメージに Ionicons を利用させて貰っています（Ionicons is licensed under the MIT license).
