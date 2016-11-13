@@ -23,7 +23,7 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 void                ShowContextMenu(HWND hwnd, POINT pt);
 BOOL                AddNotificationIcon(HWND hwnd);
-BOOL                DeleteNotificationIcon();
+BOOL                DeleteNotificationIcon(HWND hwnd);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -134,10 +134,11 @@ BOOL AddNotificationIcon(HWND hwnd)
 //
 //  目的: 通知領域からインジケーターアイコンを削除します。
 //
-BOOL DeleteNotificationIcon()
+BOOL DeleteNotificationIcon(HWND hwnd)
 {
 	NOTIFYICONDATA nid = { sizeof(nid) };
-	nid.uFlags = NIF_GUID;
+	nid.hWnd = hwnd;
+	nid.uFlags = NIF_ICON;
 	return Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
@@ -228,7 +229,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_DESTROY:
 		UninstallHook();
-		DeleteNotificationIcon();
+		DeleteNotificationIcon(hWnd);
 		PostQuitMessage(0);
 		break;
 	default:
