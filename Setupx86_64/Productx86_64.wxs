@@ -37,7 +37,7 @@
       </Component>
 
       <Component Id="ProductComponentRegistry" KeyPath="yes" Guid="449E0E47-7F76-4BB9-9C85-556C5BCEFD97">
-        <RegistryKey Id='HogeRegInstallDir'
+        <RegistryKey Id='RegInstallForAutorun'
           Root="HKLM" Action="createAndRemoveOnUninstall"
           Key="Software\Microsoft\Windows\CurrentVersion\Run" >
           <RegistryValue
