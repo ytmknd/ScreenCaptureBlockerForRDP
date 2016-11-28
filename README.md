@@ -9,6 +9,7 @@
 Print ScreenキーやSnipping Toolを使用した画面キャプチャー、Microsoft Officeの「スクリーンショット」機能を使った場合が対象です。  
 
 ## デモ
+![DEMO](https://raw.githubusercontent.com/ytmknd/ScreenCaptureBlockerForRDP/images/demo.gif)
 
 ## ビルド方法
 
