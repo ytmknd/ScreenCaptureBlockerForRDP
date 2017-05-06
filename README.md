@@ -12,6 +12,11 @@ Print ScreenキーやSnipping Toolを使用した画面キャプチャー、Micr
 ![DEMO](https://raw.githubusercontent.com/ytmknd/ScreenCaptureBlockerForRDP/images/demo.gif)
 
 ## ビルド方法
+* Visual Studio 2017、WiX Toolset が必要です。
+* ソリューションファイル（ScreenCaptureBlockerForRDP.sln）を Visual Studio から開き、ビルドしてください。
+* 必要に応じて、プラットフォーム（x86 or x64）を選んでビルドしてください。
+  x86でビルドした場合は32ビット版、x64でビルドした場合は64ビット版のビルドになります。
+* インストーラーは、Setup フォルダ（32ビット版）、Setupx86_64 フォルダ（64ビット版）の配下に作成されます。
 
 ## 注意点
 * 32ビットOSは32ビット版のインストーラーを、64ビットOSは64ビット版のインストーラーを使用してインストールしてください。
